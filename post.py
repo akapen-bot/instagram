@@ -107,8 +107,11 @@ def publish(post, raw_base):
 
 def main():
     if not IG_ID or not TOKEN:
-        print('IG_USER_ID と IG_ACCESS_TOKEN を設定してください', file=sys.stderr)
-        sys.exit(1)
+        # まだトークンを登録していない間は、毎朝エラー通知が来ないよう正常終了する
+        print('IG_USER_ID / IG_ACCESS_TOKEN が未設定です。')
+        print('Metaでトークンを取得したら、リポジトリの Settings → Secrets に登録してください。')
+        print('設定が済むまで、この処理は何もしません。')
+        return
 
     with open(os.path.join(HERE, 'schedule.json'), encoding='utf-8') as f:
         sched = json.load(f)
